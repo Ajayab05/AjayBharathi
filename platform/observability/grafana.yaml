@@ -1,0 +1,46 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:076124125794:certificate/f9f8f1fa-824e-4369-abd4-51c7a3c9d4d3
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/ssl-redirect: "443"
+    alb.ingress.kubernetes.io/target-type: ip
+    external-dns.alpha.kubernetes.io/hostname: grafana.ajay.bar
+    meta.helm.sh/release-name: kube-prometheus-stack
+    meta.helm.sh/release-namespace: monitoring
+  creationTimestamp: "2026-06-23T11:50:12Z"
+  finalizers:
+  - ingress.k8s.aws/resources
+  generation: 1
+  labels:
+    app.kubernetes.io/instance: kube-prometheus-stack
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/version: 12.2.0
+    helm.sh/chart: grafana-10.1.2
+  name: kube-prometheus-stack-grafana
+  namespace: monitoring
+  resourceVersion: "65735"
+  uid: 3268e085-7c7a-4dcf-988e-dee28aa20561
+spec:
+  ingressClassName: alb
+  rules:
+  - host: grafana.ajay.bar
+    http:
+      paths:
+      - backend:
+          service:
+            name: kube-prometheus-stack-grafana
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+status:
+  loadBalancer:
+    ingress:
+    - hostname: k8s-monitori-kubeprom-15f70ab1a4-647692757.us-east-1.elb.amazonaws.com
+      ports:
+      - port: 443
+        protocol: ""

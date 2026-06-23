@@ -1,0 +1,39 @@
+grafana:
+  adminPassword: admin123
+
+  ingress:
+    enabled: true
+    ingressClassName: alb
+
+    annotations:
+      alb.ingress.kubernetes.io/scheme: internet-facing
+      alb.ingress.kubernetes.io/target-type: ip
+      alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
+      alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:076124125794:certificate/f9f8f1fa-824e-4369-abd4-51c7a3c9d4d3
+      alb.ingress.kubernetes.io/ssl-redirect: "443"
+
+      external-dns.alpha.kubernetes.io/hostname: grafana.ajay.bar
+
+    hosts:
+      - grafana.ajay.bar
+
+prometheus:
+  ingress:
+    enabled: true
+    ingressClassName: alb
+
+    path: /
+    pathType: Prefix
+
+    annotations:
+      alb.ingress.kubernetes.io/scheme: internet-facing
+      alb.ingress.kubernetes.io/target-type: ip
+      alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
+      alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:076124125794:certificate/f9f8f1fa-824e-4369-abd4-51c7a3c9d4d3
+      alb.ingress.kubernetes.io/ssl-redirect: "443"
+      alb.ingress.kubernetes.io/healthcheck-path: /-/healthy
+      alb.ingress.kubernetes.io/success-codes: "200"
+      external-dns.alpha.kubernetes.io/hostname: prometheus.ajay.bar
+
+    hosts:
+      - prometheus.ajay.bar

@@ -1,0 +1,49 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:076124125794:certificate/f9f8f1fa-824e-4369-abd4-51c7a3c9d4d3
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/ssl-redirect: "443"
+    alb.ingress.kubernetes.io/target-type: ip
+    external-dns.alpha.kubernetes.io/hostname: prometheus.ajay.bar
+    meta.helm.sh/release-name: kube-prometheus-stack
+    meta.helm.sh/release-namespace: monitoring
+  creationTimestamp: "2026-06-23T11:50:12Z"
+  finalizers:
+  - ingress.k8s.aws/resources
+  generation: 1
+  labels:
+    app: kube-prometheus-stack-prometheus
+    app.kubernetes.io/instance: kube-prometheus-stack
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/part-of: kube-prometheus-stack
+    app.kubernetes.io/version: 78.5.0
+    chart: kube-prometheus-stack-78.5.0
+    heritage: Helm
+    release: kube-prometheus-stack
+  name: kube-prometheus-stack-prometheus
+  namespace: monitoring
+  resourceVersion: "65737"
+  uid: dae72dd5-e71c-45d8-a8c9-b3eba7747d2a
+spec:
+  ingressClassName: alb
+  rules:
+  - host: prometheus.ajay.bar
+    http:
+      paths:
+      - backend:
+          service:
+            name: kube-prometheus-stack-prometheus
+            port:
+              number: 9090
+        path: /
+        pathType: ImplementationSpecific
+status:
+  loadBalancer:
+    ingress:
+    - hostname: k8s-monitori-kubeprom-be0e96ace4-479335039.us-east-1.elb.amazonaws.com
+      ports:
+      - port: 443
+        protocol: ""
